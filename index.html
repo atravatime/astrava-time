@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ASTRAVA – Timeless by Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+      background-color: #F6F3EE;
+      color: #0F0F0F;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    header h1 {
+      font-size: 52px;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 40px;
+      border: 1px solid #0F0F0F;
+      font-size: 14px;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #0F0F0F;
+      color: #F6F3EE;
+    }
+
+    section {
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 32px;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+    }
+
+    .products {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .product {
+      border: 1px solid #0F0F0F;
+      padding: 30px;
+      width: 260px;
+    }
+
+    .product h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .product p {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    /* Instagram */
+    .instagram {
+      background-color: #0F0F0F;
+      color: #F6F3EE;
+    }
+
+    /* Game */
+    .game-box {
+      border: 1px solid #0F0F0F;
+      display: inline-block;
+      padding: 40px;
+      margin-top: 20px;
+    }
+
+    .time {
+      font-size: 48px;
+      letter-spacing: 4px;
+      margin: 20px 0;
+    }
+
+    button {
+      padding: 10px 30px;
+      font-family: 'Cinzel', serif;
+      border: 1px solid #0F0F0F;
+      background: none;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header>
+  <h1>ASTRAVA</h1>
+  <p>TIMELESS BY DESIGN</p>
+  <a href="#products" class="btn">VIEW COLLECTION</a>
+</header>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <h2>COLLECTION</h2>
+  <div class="products">
+    <div class="product">
+      <h3>Classic Leather</h3>
+      <p>Elegant white dial with brown leather strap.</p>
+      <a class="btn" href="https://instagram.com/astrava.time" target="_blank">BUY ON INSTAGRAM</a>
+    </div>
+    <div class="product">
+      <h3>Minimal Roman</h3>
+      <p>Roman numerals with refined craftsmanship.</p>
+      <a class="btn" href="https://instagram.com/astrava.time" target="_blank">BUY ON INSTAGRAM</a>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="instagram">
+  <h2>FOLLOW ASTRAVA</h2>
+  <p>@astrava.time</p>
+  <a class="btn" href="https://instagram.com/astrava.time" target="_blank">FOLLOW US</a>
+</section>
+
+<!-- GAME -->
+<section>
+  <h2>TEST YOUR TIMING</h2>
+  <p>Stop the watch exactly at <b>10.00</b></p>
+
+  <div class="game-box">
+    <div class="time" id="display">00.00</div>
+    <button onclick="start()">START</button>
+    <button onclick="stop()">STOP</button>
+    <p id="result"></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 ASTRAVA — CLASSIC TIMEPIECES
+</footer>
+
+<script>
+  let time = 0;
+  let interval;
+
+  function start() {
+    time = 0;
+    document.getElementById("result").innerText = "";
+    interval = setInterval(() => {
+      time += 0.01;
+      document.getElementById("display").innerText = time.toFixed(2);
+    }, 10);
+  }
+
+  function stop() {
+    clearInterval(interval);
+    if (time.toFixed(2) == "10.00") {
+      document.getElementById("result").innerText = "Perfect Timing!";
+    } else {
+      document.getElementById("result").innerText = "You stopped at " + time.toFixed(2);
+    }
+  }
+</script>
+
+</body>
+</html>
