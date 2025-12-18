@@ -1,39 +1,30 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Checkout | ASTRAVA</title>
+  <title>Checkout – Astrava</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<header>
-  <h1>ASTRAVA</h1>
-  <p>Secure Checkout</p>
-</header>
+<h2>Checkout</h2>
 
-<form
-  action="https://docs.google.com/forms/d/e/1FAIpQLSf_flo6YyS3GHwTwc88i--LELY_IyIA9IiYUF4YP8wF0y2wgw/formResponse"
-  method="POST"
-  target="_self"
-  onsubmit="setTimeout(()=>{window.location='success.html'},800);"
->
+<p><strong>Product:</strong> <span id="productName"></span></p>
 
-<input type="text" name="entry.1639427243" placeholder="Full Name" required>
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSf_flo6YyS3GHwTwc88i--LELY_IyIA9IiYUF4YP8wF0y2wgw/formResponse"
+      method="POST"
+      target="_self"
+      onsubmit="return submitOrder();">
 
-<input type="tel" name="entry.129241642" placeholder="Phone Number" required>
+  <!-- PRODUCT -->
+  <input type="hidden" name="entry.1232107661" id="productField">
 
-<input type="text" name="entry.1179661157" placeholder="Full Address" required>
+  <input name="entry.1639427243" placeholder="Full Name" required><br>
+  <input name="entry.129241642" placeholder="Phone Number" required><br>
+  <input name="entry.1179661157" placeholder="Address" required><br>
+  <input name="entry.1102739931" placeholder="Pincode" required><br>
+  <input name="entry.1604223165" placeholder="Instagram ID"><br>
 
-<input type="text" name="entry.1102739931" placeholder="Pincode" required>
-
-<input type="text" name="entry.1604223165" placeholder="Instagram ID">
-
-<!-- Hidden auto product field -->
-<input type="hidden" id="product-name" name="entry.1232107661">
-
-<button type="submit">Place Order (COD)</button>
-
+  <button type="submit" class="btn">Place Order</button>
 </form>
 
 <script src="js/main.js"></script>
