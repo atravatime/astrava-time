@@ -2,54 +2,18 @@
 <html>
 <head>
   <title>Astrava Classic Black</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial;
-      padding: 20px;
-      background: #f7f5f2;
-    }
-    img {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 10px;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 20px;
-      background: black;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
-
-  <script>
-    function buyProduct(productName) {
-      const formURL =
-        "https://docs.google.com/forms/d/e/1FAIpQLSf_flo6YyS3GHwTwc88i--LELY_IyIA9IiYUF4YP8wF0y2wgw/viewform?usp=pp_url" +
-        "&entry.1232107661=" + encodeURIComponent(productName);
-
-      window.open(formURL, "_blank");
-    }
-  </script>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
 
-  <h1>Astrava Classic Black</h1>
-  <p>Price: ₹1,499</p>
+<h2>Astrava Classic Black</h2>
+<p>Elegant black dial, leather strap, classic design.</p>
+<p><strong>Price:</strong> ₹1,499</p>
 
-  <img src="../assets/images/astrava-black.jpg" alt="Astrava Watch">
+<button class="btn" onclick="buyProduct('Astrava Classic Black')">
+  Buy Now
+</button>
 
-  <br>
-
-  <a class="btn" onclick="buyProduct('Astrava Classic Black')">
-    Buy Now (Cash on Delivery)
-  </a>
-
+<script src="../js/main.js"></script>
 </body>
 </html>
