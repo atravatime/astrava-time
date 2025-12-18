@@ -2,30 +2,35 @@
 <html>
 <head>
   <title>Checkout – Astrava</title>
+
   <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<h2>Checkout</h2>
+<section>
+  <h2 style="font-family:'Playfair Display',serif;">Checkout</h2>
 
-<p><strong>Product:</strong> <span id="productName"></span></p>
+  <p><strong>Product:</strong> <span id="productName"></span></p>
 
-<form action="https://docs.google.com/forms/d/e/1FAIpQLSf_flo6YyS3GHwTwc88i--LELY_IyIA9IiYUF4YP8wF0y2wgw/formResponse"
-      method="POST"
-      target="_self"
-      onsubmit="return submitOrder();">
+  <form
+    action="https://docs.google.com/forms/d/e/1FAIpQLSf_flo6YyS3GHwTwc88i--LELY_IyIA9IiYUF4YP8wF0y2wgw/formResponse"
+    method="POST"
+    target="_self"
+    onsubmit="return submitOrder();">
 
-  <!-- PRODUCT -->
-  <input type="hidden" name="entry.1232107661" id="productField">
+    <!-- Product -->
+    <input type="hidden" name="entry.1232107661" id="productField">
 
-  <input name="entry.1639427243" placeholder="Full Name" required><br>
-  <input name="entry.129241642" placeholder="Phone Number" required><br>
-  <input name="entry.1179661157" placeholder="Address" required><br>
-  <input name="entry.1102739931" placeholder="Pincode" required><br>
-  <input name="entry.1604223165" placeholder="Instagram ID"><br>
+    <input name="entry.1639427243" placeholder="Full Name" required>
+    <input name="entry.129241642" placeholder="Phone Number" required>
+    <input name="entry.1179661157" placeholder="Full Address" required>
+    <input name="entry.1102739931" placeholder="Pincode" required>
+    <input name="entry.1604223165" placeholder="Instagram ID">
 
-  <button type="submit" class="btn">Place Order</button>
-</form>
+    <button type="submit" class="btn">PLACE ORDER</button>
+  </form>
+</section>
 
 <script src="js/main.js"></script>
 </body>
