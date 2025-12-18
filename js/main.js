@@ -1,4 +1,3 @@
-
 function buyProduct(productName) {
   localStorage.setItem("selectedProduct", productName);
   window.location.href = "../checkout.html";
@@ -16,6 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function submitOrder() {
   setTimeout(() => {
     window.location.href = "success.html";
-  }, 500);
+  }, 600);
   return true;
 }
