@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Astrava Time – Product</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Main JS -->
+  <script src="js/main.js" defer></script>
+
+  <style>
+    /* PRODUCT PAGE ONLY (SAFE, NO UI BREAK) */
+
+    .product-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .product-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .carousel {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .carousel img {
+      width: 100%;
+      display: none;
+      border-radius: 14px;
+    }
+
+    .carousel img.active {
+      display: block;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .carousel-btn.left { left: 10px; }
+    .carousel-btn.right { right: 10px; }
+
+    .sizes {
+      display: flex;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .size {
+      padding: 8px 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .size.active {
+      background: #000;
+      color: #fff;
+      border-color: #000;
+    }
+
+    .buy-btn {
+      width: 100%;
+      padding: 14px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="container header">
+    <h1 class="brand">Astrava Time</h1>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+    </nav>
+  </header>
+
+  <!-- PRODUCT -->
+  <main class="container product-page">
+    <div class="product-layout">
+
+      <!-- IMAGES -->
+      <div class="product-images">
+        <div class="carousel" id="productImages">
+          <!-- Images injected by main.js -->
+          <button class="carousel-btn left" id="prevImg">‹</button>
+          <button class="carousel-btn right" id="nextImg">›</button>
+        </div>
+      </div>
+
+      <!-- DETAILS -->
+      <div class="product-details">
+        <h1 id="productName"></h1>
+        <p class="price" id="productPrice"></p>
+
+        <div class="sizes" id="sizeContainer"></div>
+
+        <!-- ORDER FORM -->
+        <form id="orderForm">
+          <input type="text" name="name" placeholder="Full Name" required>
+          <input type="tel" name="phone" placeholder="Phone Number" required>
+          <input type="text" name="address" placeholder="Full Address" required>
+          <input type="text" name="city" placeholder="City">
+
+          <input type="hidden" name="product" id="formProduct">
+          <input type="hidden" name="price" id="formPrice">
+          <input type="hidden" name="size" id="formSize">
+
+          <button type="submit" class="buy-btn">BUY NOW</button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- CAROUSEL LOGIC -->
+  <script>
+    let currentIndex = 0;
+
+    function showImage(index) {
+      const imgs = document.querySelectorAll("#productImages img");
+      if (!imgs.length) return;
+
+      imgs.forEach((img, i) => {
+        img.classList.toggle("active", i === index);
+      });
+    }
+
+    document.getElementById("prevImg").addEventListener("click", () => {
+      const imgs = document.querySelectorAll("#productImages img");
+      currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
+      showImage(currentIndex);
+    });
+
+    document.getElementById("nextImg").addEventListener("click", () => {
+      const imgs = document.querySelectorAll("#productImages img");
+      currentIndex = (currentIndex + 1) % imgs.length;
+      showImage(currentIndex);
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => showImage(0), 500);
+    });
+  </script>
+
+</body>
+</html>
