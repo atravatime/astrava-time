@@ -1,43 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Astrava – Timeless Watches</title>
+  <meta charset="UTF-8">
+  <title>Astrava Time® | Timeless Watches</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
-  <h1>ASTRAVA</h1>
-  <p>Timeless Watches for the Modern Royal</p>
-
-  <a href="shop.html" class="btn">SHOP COLLECTION</a>
-</header>
-
-<section class="social">
-  <p>Join our journey on Instagram</p>
-  <a href="https://instagram.com/astrava" target="_blank">@astrava</a>
-</section>
-<section>
-  <h2>Our Collection</h2>
-
-  <div class="shop-grid">
-
-    <div class="product-card">
-      <h3>Astrava Vintage Brown</h3>
-      <p>₹2,499</p>
-      <a class="btn" href="products/astrava-vintage-brown.html">View</a>
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <h1>ASTRAVA</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="product-card">
-      <h3>Astrava Royal Black</h3>
-      <p>₹2,799</p>
-      <a class="btn" href="products/astrava-royal-black.html">View</a>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>ASTRAVA TIME</h1>
+      <p>Luxury Watches for Every Moment</p>
+      <a href="shop.html" class="btn">SHOP COLLECTION</a>
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- ABOUT BRAND -->
+  <section class="container" style="padding: 70px 0; text-align:center;">
+    <h2 style="font-size:28px; margin-bottom:12px; letter-spacing:2px;">
+      TIME, REFINED
+    </h2>
+    <p style="max-width:680px; margin:auto; font-size:15px; opacity:0.85;">
+      Astrava Time represents precision, elegance, and modern craftsmanship.
+      Designed for those who value timeless style and everyday durability.
+    </p>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="products">
+    <div class="container">
+      <h2 style="font-size:24px; margin-bottom:24px;">
+        Featured Watches
+      </h2>
+
+      <div class="product-grid" id="productGrid">
+        <!-- Products auto-load from Google Sheet -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="padding:40px 0; text-align:center; font-size:13px; opacity:0.7;">
+    © 2025 Astrava Time. All Rights Reserved.
+  </footer>
+
+  <!-- JS -->
+  <script src="js/main.js"></script>
+
 </body>
 </html>
-
