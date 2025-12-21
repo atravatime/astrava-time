@@ -1,28 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Collection – Astrava</title>
+  <meta charset="UTF-8">
+  <title>Astrava Time – Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Main CSS -->
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&display=swap" rel="stylesheet">
+
+  <!-- Main JS -->
+  <script src="js/main.js" defer></script>
 </head>
 <body>
 
-<section>
-  <h2 style="font-family:'Playfair Display',serif;letter-spacing:3px;">
-    OUR COLLECTION
-  </h2>
+  <!-- HEADER -->
+  <header class="container header">
+    <h1 class="brand">Astrava Time</h1>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active">Shop</a>
+    </nav>
+  </header>
 
-  <div class="shop-grid">
+  <!-- SHOP TITLE -->
+  <section class="container shop-header">
+    <h2>Premium Watches Collection</h2>
+    <p>Timeless design. Everyday luxury.</p>
+  </section>
 
-    <div class="product-card">
-      <h3>Astrava Classic Black</h3>
-      <p>₹1,499</p>
-      <a href="products/astrava-black.html" class="btn">VIEW DETAILS</a>
+  <!-- PRODUCT GRID -->
+  <main class="container">
+    <div id="productGrid" class="product-grid">
+      <!-- Products load here from Google Sheet -->
     </div>
+  </main>
 
-  </div>
-</section>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 Astrava Time. All Rights Reserved.</p>
+  </footer>
 
 </body>
 </html>
