@@ -12,7 +12,7 @@
   <script src="js/main.js" defer></script>
 
   <style>
-    /* PRODUCT PAGE ONLY (SAFE, NO UI BREAK) */
+    /* PRODUCT PAGE ONLY */
 
     .product-layout {
       display: grid;
@@ -95,12 +95,14 @@
 <body>
 
   <!-- HEADER -->
-  <header class="container header">
-    <h1 class="brand">Astrava Time</h1>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-    </nav>
+  <header>
+    <div class="container">
+      <h1>Astrava Time</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+      </nav>
+    </div>
   </header>
 
   <!-- PRODUCT -->
@@ -111,8 +113,10 @@
       <div class="product-images">
         <div class="carousel" id="productImages">
           <!-- Images injected by main.js -->
-          <button class="carousel-btn left" id="prevImg">‹</button>
-          <button class="carousel-btn right" id="nextImg">›</button>
+
+          <!-- BUTTON IDS MUST MATCH JS -->
+          <button class="carousel-btn left" id="prevBtn">‹</button>
+          <button class="carousel-btn right" id="nextBtn">›</button>
         </div>
       </div>
 
@@ -140,36 +144,6 @@
 
     </div>
   </main>
-
-  <!-- CAROUSEL LOGIC -->
-  <script>
-    let currentIndex = 0;
-
-    function showImage(index) {
-      const imgs = document.querySelectorAll("#productImages img");
-      if (!imgs.length) return;
-
-      imgs.forEach((img, i) => {
-        img.classList.toggle("active", i === index);
-      });
-    }
-
-    document.getElementById("prevImg").addEventListener("click", () => {
-      const imgs = document.querySelectorAll("#productImages img");
-      currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
-      showImage(currentIndex);
-    });
-
-    document.getElementById("nextImg").addEventListener("click", () => {
-      const imgs = document.querySelectorAll("#productImages img");
-      currentIndex = (currentIndex + 1) % imgs.length;
-      showImage(currentIndex);
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => showImage(0), 500);
-    });
-  </script>
 
 </body>
 </html>
