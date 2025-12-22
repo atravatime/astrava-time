@@ -1,9 +1,9 @@
 // ============================
-// Astrava Time – Main JS (FIXED & STABLE)
+// Astrava Time – MAIN JS (FINAL)
 // ============================
 
 /* ============================
-   IMAGE CLEANER
+   HELPERS
 ============================ */
 function cleanImage(url) {
   if (!url) return "";
@@ -15,9 +15,6 @@ function cleanImage(url) {
     .replace(/\.png\.png$/i, ".png");
 }
 
-/* ============================
-   CSV SAFE SPLIT
-============================ */
 function csvSplit(row) {
   return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)?.map(c =>
     c.replace(/^"|"$/g, "").trim()
@@ -25,21 +22,19 @@ function csvSplit(row) {
 }
 
 /* ============================
-   FETCH PRODUCTS
+   FETCH PRODUCTS (GOOGLE SHEET)
 ============================ */
 async function getProducts() {
-  const sheetURL =
+  const SHEET_URL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vRMeQomla92HiTZJTJzcYxsBIWwOAdGB2QcZg_YzShV-cMAFtyr3xO8Qic0GKdQ-dmpy2VldE_ZKIg5/pub?output=csv";
 
-  const res = await fetch(sheetURL);
+  const res = await fetch(SHEET_URL);
   const text = await res.text();
-
   const rows = text.split("\n").slice(1);
 
   return rows
     .map(row => {
       const cols = csvSplit(row);
-
       return {
         id: cols[0],
         name: cols[1],
@@ -80,7 +75,7 @@ async function loadShopProducts() {
 }
 
 /* ============================
-   SEARCH (SHOP)
+   SEARCH
 ============================ */
 function setupSearch() {
   const input = document.getElementById("searchInput");
@@ -107,54 +102,51 @@ async function loadProductPage() {
   const product = products.find(p => p.id === id);
   if (!product) return;
 
-  const productName = document.getElementById("productName");
-  const productPrice = document.getElementById("productPrice");
+  // Elements
+  const nameEl = document.getElementById("productName");
+  const priceEl = document.getElementById("productPrice");
   const carousel = document.getElementById("productImages");
-  const prevBtn = document.getElementById("prevBtn");
-  const nextBtn = document.getElementById("nextBtn");
 
-  const formProduct = document.getElementById("formProduct");
-  const formPrice = document.getElementById("formPrice");
+  // Set text
+  nameEl.textContent = product.name;
+  priceEl.textContent = `₹${product.price}`;
 
-  if (!carousel) return;
+  // Inject images
+  carousel.innerHTML = `
+    <button class="carousel-btn left" id="prevImg">‹</button>
+    <button class="carousel-btn right" id="nextImg">›</button>
+  `;
 
-  productName.textContent = product.name;
-  productPrice.textContent = `₹${product.price}`;
-  formProduct.value = product.name;
-  formPrice.value = product.price;
-
-  carousel.innerHTML = "";
-
-  product.images.forEach((src, i) => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.className = i === 0 ? "active" : "";
-    carousel.appendChild(img);
+  product.images.forEach((img, i) => {
+    const image = document.createElement("img");
+    image.src = img;
+    if (i === 0) image.classList.add("active");
+    carousel.appendChild(image);
   });
 
+  // Carousel logic
+  let current = 0;
   const imgs = carousel.querySelectorAll("img");
-  let index = 0;
 
-  if (imgs.length < 2) {
-    if (prevBtn) prevBtn.style.display = "none";
-    if (nextBtn) nextBtn.style.display = "none";
-    return;
+  function show(index) {
+    imgs.forEach((img, i) =>
+      img.classList.toggle("active", i === index)
+    );
   }
 
-  function show(i) {
-    imgs.forEach(img => img.classList.remove("active"));
-    imgs[i].classList.add("active");
-  }
-
-  prevBtn.onclick = () => {
-    index = (index - 1 + imgs.length) % imgs.length;
-    show(index);
+  document.getElementById("prevImg").onclick = () => {
+    current = (current - 1 + imgs.length) % imgs.length;
+    show(current);
   };
 
-  nextBtn.onclick = () => {
-    index = (index + 1) % imgs.length;
-    show(index);
+  document.getElementById("nextImg").onclick = () => {
+    current = (current + 1) % imgs.length;
+    show(current);
   };
+
+  // Fill hidden form fields
+  document.getElementById("formProduct").value = product.name;
+  document.getElementById("formPrice").value = product.price;
 }
 
 /* ============================
@@ -167,15 +159,21 @@ function setupOrderForm() {
   form.addEventListener("submit", e => {
     e.preventDefault();
 
+    const fd = new FormData();
+
+    fd.append("entry.1639427243", form.name.value);          // Full Name
+    fd.append("entry.1232107661", form.phone.value);         // Phone
+    fd.append("entry.1604223165", form.address.value);       // Address
+    fd.append("entry.1179661157", form.product.value);       // Product
+    fd.append("entry.129241642", form.price.value);          // Price
+    fd.append("entry.1102739931", form.pincode.value);       // Pincode
+    fd.append("entry.5720000000", form.instagram.value);    // Instagram ID (NEW)
+
     fetch(
       "https://docs.google.com/forms/d/e/1FAIpQLSf_flo6YyS3GHwTwc88i--LELY_IyIA9IiYUF4YP8wF0y2wgw/formResponse",
-      {
-        method: "POST",
-        mode: "no-cors",
-        body: new FormData(form)
-      }
+      { method: "POST", mode: "no-cors", body: fd }
     ).then(() => {
-      location.href = "success.html";
+      window.location.href = "success.html";
     });
   });
 }
