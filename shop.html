@@ -14,30 +14,49 @@
 <body>
 
   <!-- HEADER -->
-  <header class="container header">
-    <h1 class="brand">Astrava Time</h1>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="shop.html" class="active">Shop</a>
-    </nav>
+  <header>
+    <div class="container">
+      <h1>Astrava Time</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="shop.html" class="active">Shop</a>
+      </nav>
+    </div>
   </header>
 
-  <!-- SHOP TITLE -->
-  <section class="container shop-header">
-    <h2>Premium Watches Collection</h2>
-    <p>Timeless design. Everyday luxury.</p>
+  <!-- SHOP HEADER -->
+  <section class="container" style="padding:40px 0 20px;">
+    <h2 style="font-size:28px; font-weight:700;">Premium Watches Collection</h2>
+    <p style="opacity:0.7;">Timeless design. Everyday luxury.</p>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="container" style="margin-bottom:30px;">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search watches..."
+      style="
+        width:100%;
+        max-width:360px;
+        padding:12px 14px;
+        border-radius:8px;
+        border:1px solid #ddd;
+        font-size:14px;
+      "
+    >
   </section>
 
   <!-- PRODUCT GRID -->
   <main class="container">
     <div id="productGrid" class="product-grid">
-      <!-- Products load here from Google Sheet -->
+      <!-- Products load from Google Sheet -->
     </div>
   </main>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <p>© 2025 Astrava Time. All Rights Reserved.</p>
+  <footer style="margin-top:80px; padding:20px 0; text-align:center; font-size:13px; opacity:0.6;">
+    © 2025 Astrava Time. All Rights Reserved.
   </footer>
 
 </body>
