@@ -161,17 +161,21 @@ function setupOrderForm() {
 
     const fd = new FormData();
 
-    fd.append("entry.1639427243", form.name.value);      // Name
-    fd.append("entry.1232107661", form.phone.value);     // Phone
-    fd.append("entry.1604223165", form.address.value);   // Address
-    fd.append("entry.1179661157", form.product.value);   // ✅ PRODUCT ID
-    fd.append("entry.129241642", form.price.value);      // Price
-    fd.append("entry.1102739931", form.pincode.value);   // Pincode
-    fd.append("entry.5720000000", form.instagram.value); // Instagram
+    // ✅ EXACT GOOGLE FORM MAPPING (FROM PREFILL LINK)
+    fd.append("entry.1232107661", form.product.value);   // PRODUCT ID
+    fd.append("entry.1639427243", form.name.value);      // NAME
+    fd.append("entry.129241642", form.phone.value);      // PHONE
+    fd.append("entry.1179661157", form.address.value);   // ADDRESS
+    fd.append("entry.1102739931", form.pincode.value);   // PINCODE
+    fd.append("entry.1604223165", form.instagram.value); // INSTAGRAM
 
     fetch(
       "https://docs.google.com/forms/d/e/1FAIpQLSf_flo6YyS3GHwTwc88i--LELY_IyIA9IiYUF4YP8wF0y2wgw/formResponse",
-      { method: "POST", mode: "no-cors", body: fd }
+      {
+        method: "POST",
+        mode: "no-cors",
+        body: fd
+      }
     ).then(() => {
       window.location.href = "success.html";
     });
