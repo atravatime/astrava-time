@@ -5,10 +5,10 @@
   <title>Astrava Time – Product</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Main CSS -->
+  <!-- MAIN CSS -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Main JS -->
+  <!-- MAIN JS -->
   <script src="js/main.js" defer></script>
 
   <style>
@@ -54,29 +54,18 @@
       color: #fff;
       font-size: 20px;
       cursor: pointer;
+      z-index: 10;
     }
 
     .carousel-btn.left { left: 10px; }
     .carousel-btn.right { right: 10px; }
 
-    .sizes {
-      display: flex;
-      gap: 10px;
-      margin: 14px 0;
-    }
-
-    .size {
-      padding: 8px 14px;
-      border: 1px solid #ccc;
+    .product-details input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
       border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    .size.active {
-      background: #000;
-      color: #fff;
-      border-color: #000;
+      border: 1px solid #ccc;
     }
 
     .buy-btn {
@@ -88,21 +77,19 @@
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 12px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
   <!-- HEADER -->
-  <header>
-    <div class="container">
-      <h1>Astrava Time</h1>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
-      </nav>
-    </div>
+  <header class="container header">
+    <h1 class="brand">Astrava Time</h1>
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+    </nav>
   </header>
 
   <!-- PRODUCT -->
@@ -112,11 +99,7 @@
       <!-- IMAGES -->
       <div class="product-images">
         <div class="carousel" id="productImages">
-          <!-- Images injected by main.js -->
-
-          <!-- BUTTON IDS MUST MATCH JS -->
-          <button class="carousel-btn left" id="prevBtn">‹</button>
-          <button class="carousel-btn right" id="nextBtn">›</button>
+          <!-- Images + buttons injected by main.js -->
         </div>
       </div>
 
@@ -125,18 +108,20 @@
         <h1 id="productName"></h1>
         <p class="price" id="productPrice"></p>
 
-        <div class="sizes" id="sizeContainer"></div>
-
         <!-- ORDER FORM -->
         <form id="orderForm">
+
           <input type="text" name="name" placeholder="Full Name" required>
           <input type="tel" name="phone" placeholder="Phone Number" required>
           <input type="text" name="address" placeholder="Full Address" required>
-          <input type="text" name="city" placeholder="City">
 
+          <!-- NEW FIELDS -->
+          <input type="text" name="pincode" placeholder="Pincode" required>
+          <input type="text" name="instagram" placeholder="Instagram ID (optional)">
+
+          <!-- HIDDEN -->
           <input type="hidden" name="product" id="formProduct">
           <input type="hidden" name="price" id="formPrice">
-          <input type="hidden" name="size" id="formSize">
 
           <button type="submit" class="buy-btn">BUY NOW</button>
         </form>
@@ -144,6 +129,11 @@
 
     </div>
   </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 Astrava Time. All Rights Reserved.</p>
+  </footer>
 
 </body>
 </html>
