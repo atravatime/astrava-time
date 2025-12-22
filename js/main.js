@@ -1,8 +1,10 @@
 // ============================
-// Astrava Time – Main JS
+// Astrava Time – Main JS (FIXED & STABLE)
 // ============================
 
-// IMAGE CLEANER (CRITICAL)
+/* ============================
+   IMAGE CLEANER
+============================ */
 function cleanImage(url) {
   if (!url) return "";
   return url
@@ -13,31 +15,44 @@ function cleanImage(url) {
     .replace(/\.png\.png$/i, ".png");
 }
 
-// ============================
-// FETCH PRODUCTS
-// ============================
+/* ============================
+   CSV SAFE SPLIT
+============================ */
+function csvSplit(row) {
+  return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)?.map(c =>
+    c.replace(/^"|"$/g, "").trim()
+  ) || [];
+}
+
+/* ============================
+   FETCH PRODUCTS
+============================ */
 async function getProducts() {
   const sheetURL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vRMeQomla92HiTZJTJzcYxsBIWwOAdGB2QcZg_YzShV-cMAFtyr3xO8Qic0GKdQ-dmpy2VldE_ZKIg5/pub?output=csv";
 
   const res = await fetch(sheetURL);
   const text = await res.text();
+
   const rows = text.split("\n").slice(1);
 
-  return rows.map(row => {
-    const cols = row.split(",");
-    return {
-      id: cols[0]?.trim(),
-      name: cols[1]?.trim(),
-      price: cols[2]?.trim(),
-      images: cols.slice(3).map(i => cleanImage(i)).filter(Boolean)
-    };
-  });
+  return rows
+    .map(row => {
+      const cols = csvSplit(row);
+
+      return {
+        id: cols[0],
+        name: cols[1],
+        price: cols[2],
+        images: cols.slice(3).map(cleanImage).filter(Boolean)
+      };
+    })
+    .filter(p => p.id && p.name);
 }
 
-// ============================
-// SHOP PAGE
-// ============================
+/* ============================
+   SHOP PAGE
+============================ */
 async function loadShopProducts() {
   const grid = document.getElementById("productGrid");
   if (!grid) return;
@@ -53,7 +68,7 @@ async function loadShopProducts() {
     card.className = "product-card";
 
     card.innerHTML = `
-      <img src="${p.images[0]}" alt="${p.name}" loading="lazy">
+      <img src="${p.images[0]}" alt="${p.name}">
       <div class="product-info">
         <h3>${p.name}</h3>
         <span>₹${p.price}</span>
@@ -64,9 +79,26 @@ async function loadShopProducts() {
   });
 }
 
-// ============================
-// PRODUCT PAGE
-// ============================
+/* ============================
+   SEARCH (SHOP)
+============================ */
+function setupSearch() {
+  const input = document.getElementById("searchInput");
+  if (!input) return;
+
+  input.addEventListener("input", () => {
+    const val = input.value.toLowerCase();
+    document.querySelectorAll(".product-card").forEach(card => {
+      card.style.display = card.innerText.toLowerCase().includes(val)
+        ? ""
+        : "none";
+    });
+  });
+}
+
+/* ============================
+   PRODUCT PAGE
+============================ */
 async function loadProductPage() {
   const id = new URLSearchParams(location.search).get("id");
   if (!id) return;
@@ -75,80 +107,85 @@ async function loadProductPage() {
   const product = products.find(p => p.id === id);
   if (!product) return;
 
+  const productName = document.getElementById("productName");
+  const productPrice = document.getElementById("productPrice");
+  const carousel = document.getElementById("productImages");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  const formProduct = document.getElementById("formProduct");
+  const formPrice = document.getElementById("formPrice");
+
+  if (!carousel) return;
+
   productName.textContent = product.name;
   productPrice.textContent = `₹${product.price}`;
   formProduct.value = product.name;
   formPrice.value = product.price;
 
-  // Images
-  const carousel = document.getElementById("productImages");
   carousel.innerHTML = "";
 
   product.images.forEach((src, i) => {
     const img = document.createElement("img");
     img.src = src;
-    img.alt = product.name;
-    if (i === 0) img.classList.add("active");
+    img.className = i === 0 ? "active" : "";
     carousel.appendChild(img);
   });
 
+  const imgs = carousel.querySelectorAll("img");
   let index = 0;
-  prevBtn.onclick = () => changeImg(-1);
-  nextBtn.onclick = () => changeImg(1);
 
-  function changeImg(dir) {
-    const imgs = carousel.querySelectorAll("img");
-    imgs[index].classList.remove("active");
-    index = (index + dir + imgs.length) % imgs.length;
-    imgs[index].classList.add("active");
+  if (imgs.length < 2) {
+    if (prevBtn) prevBtn.style.display = "none";
+    if (nextBtn) nextBtn.style.display = "none";
+    return;
   }
 
-  // Variants
-  ["Black", "Silver", "Brown"].forEach(v => {
-    const s = document.createElement("span");
-    s.className = "size";
-    s.textContent = v;
-    s.onclick = () => {
-      document.querySelectorAll(".size").forEach(x => x.classList.remove("active"));
-      s.classList.add("active");
-      formSize.value = v;
-    };
-    sizeContainer.appendChild(s);
-  });
-  sizeContainer.firstChild.click();
+  function show(i) {
+    imgs.forEach(img => img.classList.remove("active"));
+    imgs[i].classList.add("active");
+  }
+
+  prevBtn.onclick = () => {
+    index = (index - 1 + imgs.length) % imgs.length;
+    show(index);
+  };
+
+  nextBtn.onclick = () => {
+    index = (index + 1) % imgs.length;
+    show(index);
+  };
 }
 
-// ============================
-// ORDER FORM
-// ============================
+/* ============================
+   ORDER FORM (GOOGLE FORM)
+============================ */
 function setupOrderForm() {
-  if (!orderForm) return;
+  const form = document.getElementById("orderForm");
+  if (!form) return;
 
-  orderForm.addEventListener("submit", e => {
+  form.addEventListener("submit", e => {
     e.preventDefault();
-
-    const fd = new FormData();
-    fd.append("entry.1639427243", orderForm.name.value);
-    fd.append("entry.1232107661", orderForm.phone.value);
-    fd.append("entry.1179661157", orderForm.product.value);
-    fd.append("entry.1102739931", orderForm.size.value);
-    fd.append("entry.129241642", orderForm.price.value);
-    fd.append("entry.1604223165", orderForm.address.value);
 
     fetch(
       "https://docs.google.com/forms/d/e/1FAIpQLSf_flo6YyS3GHwTwc88i--LELY_IyIA9IiYUF4YP8wF0y2wgw/formResponse",
-      { method: "POST", mode: "no-cors", body: fd }
+      {
+        method: "POST",
+        mode: "no-cors",
+        body: new FormData(form)
+      }
     ).then(() => {
-      window.location.href = "success.html";
+      location.href = "success.html";
     });
   });
 }
 
-// ============================
-// INIT
-// ============================
+/* ============================
+   INIT
+============================ */
 document.addEventListener("DOMContentLoaded", () => {
   loadShopProducts();
+  setupSearch();
   loadProductPage();
   setupOrderForm();
 });
