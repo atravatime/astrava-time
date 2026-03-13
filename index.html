@@ -1,66 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Astrava Time® | Timeless Watches</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AstravaTime</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* NAVBAR */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+z-index:10;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+.menu a{
+margin-left:20px;
+color:white;
+text-decoration:none;
+}
+
+/* HERO */
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.hero h1{
+font-size:60px;
+margin-bottom:10px;
+}
+
+.hero p{
+color:#aaa;
+margin-bottom:20px;
+}
+
+button{
+padding:12px 30px;
+font-size:18px;
+border:none;
+background:#00c3ff;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* SCROLL SECTIONS */
+
+.section{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:40px;
+text-align:center;
+padding:20px;
+}
+
+.section:nth-child(even){
+background:#111;
+}
+
+</style>
 </head>
+
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="container">
-      <h1>ASTRAVA</h1>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
-      </nav>
-    </div>
-  </header>
+<nav>
+<div class="logo">AstravaTime</div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>ASTRAVA TIME</h1>
-      <p>Luxury Watches for Every Moment</p>
-      <a href="shop.html" class="btn">SHOP COLLECTION</a>
-    </div>
-  </section>
+<div class="menu">
+<a href="#">Home</a>
+<a href="#">Shop</a>
+<a href="#">Contact</a>
+</div>
+</nav>
 
-  <!-- ABOUT BRAND -->
-  <section class="container" style="padding: 70px 0; text-align:center;">
-    <h2 style="font-size:28px; margin-bottom:12px; letter-spacing:2px;">
-      TIME, REFINED
-    </h2>
-    <p style="max-width:680px; margin:auto; font-size:15px; opacity:0.85;">
-      Astrava Time represents precision, elegance, and modern craftsmanship.
-      Designed for those who value timeless style and everyday durability.
-    </p>
-  </section>
+<div class="hero">
+<h1>Premium Time</h1>
+<p>Budget Price. Premium Vibe.</p>
+<button>Shop Now</button>
+</div>
 
-  <!-- FEATURED -->
-  <section class="products">
-    <div class="container">
-      <h2 style="font-size:24px; margin-bottom:24px;">
-        Featured Watches
-      </h2>
+<div class="section">Elegant Design</div>
+<div class="section">Made For Style</div>
+<div class="section">Only ₹350</div>
 
-      <div class="product-grid" id="productGrid">
-        <!-- Products auto-load from Google Sheet -->
-      </div>
-    </div>
-  </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-  <!-- FOOTER -->
-  <footer style="padding:40px 0; text-align:center; font-size:13px; opacity:0.7;">
-    © 2025 Astrava Time. All Rights Reserved.
-  </footer>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
 
-  <!-- JS -->
-  <script src="js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
+
+const renderer = new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+
+document.body.appendChild(renderer.domElement);
+
+/* LIGHT */
+
+const light = new THREE.HemisphereLight(0xffffff,0x444444,2);
+scene.add(light);
+
+const dirLight = new THREE.DirectionalLight(0xffffff,1);
+dirLight.position.set(5,10,7);
+scene.add(dirLight);
+
+/* LOAD 3D WATCH */
+
+const loader = new THREE.GLTFLoader();
+
+let watch;
+
+loader.load(
+
+"watch.glb",
+
+function(gltf){
+
+watch = gltf.scene;
+
+watch.scale.set(2,2,2);
+
+scene.add(watch);
+
+},
+
+undefined,
+
+function(error){
+console.log(error);
+}
+
+);
+
+/* CAMERA */
+
+camera.position.z = 6;
+
+/* ANIMATION LOOP */
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+if(watch){
+watch.rotation.y += 0.003;
+}
+
+renderer.render(scene,camera);
+
+}
+
+animate();
+
+/* MOUSE INTERACTION */
+
+window.addEventListener("mousemove",(event)=>{
+
+if(!watch) return;
+
+let x = (event.clientX/window.innerWidth)-0.5;
+let y = (event.clientY/window.innerHeight)-0.5;
+
+watch.rotation.y = x*3;
+watch.rotation.x = y*1;
+
+});
+
+/* SCROLL ANIMATION */
+
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.to(camera.position,{
+z:10,
+scrollTrigger:{
+trigger:".section",
+start:"top center",
+end:"bottom center",
+scrub:true
+}
+});
+
+/* RESPONSIVE */
+
+window.addEventListener("resize",()=>{
+
+camera.aspect = window.innerWidth/window.innerHeight;
+camera.updateProjectionMatrix();
+
+renderer.setSize(window.innerWidth,window.innerHeight);
+
+});
+
+</script>
 
 </body>
 </html>
